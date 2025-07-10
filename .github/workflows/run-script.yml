@@ -1,16 +1,16 @@
-name: Run Main Script
+name: Run Telegram & Discord Collector
 
 on:
-  workflow_dispatch:        # manual trigger from phone
+  workflow_dispatch:      # manual trigger
   schedule:
-    - cron: '0 * * * *'     # every hour
+    - cron: '0 * * * *'   # every hour
 
 jobs:
-  run-main:
+  run-script:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -20,7 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt || true  # skip if no requirements.txt
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run main.py
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         run: python main.py
