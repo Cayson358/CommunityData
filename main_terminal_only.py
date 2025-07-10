@@ -1,4 +1,3 @@
-import os
 import requests
 import random
 import time
@@ -21,15 +20,9 @@ def get_my_time_str():
     tz = pytz.timezone("Asia/Kuala_Lumpur")
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
-# ======== Logging Function ==========
-def log(msg):
-    print(msg)
-    with open("output.log", "a", encoding="utf-8") as f:
-        f.write(msg + "\n")
-
 # ======== Discord Scraper ==========
 def collect_discord():
-    log("\n📡 Discord Data:")
+    print(f"\n📡 Discord Data — {get_my_time_str()}")
     for name, code in discord_invites.items():
         url = f"https://discord.com/api/v9/invites/{code}?with_counts=true"
         try:
@@ -38,20 +31,20 @@ def collect_discord():
             data = res.json()
             total = data.get("approximate_member_count", 'N/A')
             online = data.get("approximate_presence_count", 'N/A')
-            log(f"{get_my_time_str()} | Discord | {name}: Online {online} / Total {total}")
+            print(f"✅ {name}: Online {online} / Total {total}")
         except Exception as e:
-            log(f"⚠️ {name} failed: {e}")
-        time.sleep(random.uniform(1.0, 2.0))  # light delay
+            print(f"⚠️ {name} failed: {e}")
+        time.sleep(random.uniform(1.0, 2.0))
 
-# ======== Main Entry ==========
+# ======== Main Loop ==========
 def main():
-    with open("output.log", "a", encoding="utf-8") as f:
-        f.write("\n\n📊 New Run — " + get_my_time_str() + "\n")
-        f.write("===========================\n")
-
-    log(f"🕒 Started: {get_my_time_str()}")
-    collect_discord()
-    log(f"\n✅ Finished: {get_my_time_str()}")
+    for i in range(6):  # Repeat 6 times
+        print(f"\n=== ⏱️ Cycle {i+1}/6 started ===")
+        collect_discord()
+        if i < 5:
+            print("⏳ Waiting 1 hour until next cycle...\n")
+            time.sleep(3600)  # 1 hour
+    print(f"\n✅ All 6 cycles completed at {get_my_time_str()}")
 
 if __name__ == "__main__":
     main()
