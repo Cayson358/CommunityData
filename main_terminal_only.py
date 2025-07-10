@@ -20,9 +20,15 @@ def get_my_time_str():
     tz = pytz.timezone("Asia/Kuala_Lumpur")
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
+# ======== Logging Function ==========
+def log(msg):
+    print(msg)
+    with open("output.log", "a", encoding="utf-8") as f:
+        f.write(msg + "\n")
+
 # ======== Discord Scraper ==========
 def collect_discord():
-    print("\n📡 Discord Data:")
+    log("\n📡 Discord Data:")
     for name, code in discord_invites.items():
         url = f"https://discord.com/api/v9/invites/{code}?with_counts=true"
         try:
@@ -31,15 +37,20 @@ def collect_discord():
             data = res.json()
             total = data.get("approximate_member_count", 'N/A')
             online = data.get("approximate_presence_count", 'N/A')
-            print(f"{get_my_time_str()} | Discord | {name}: Online {online} / Total {total}")
+            log(f"{get_my_time_str()} | Discord | {name}: Online {online} / Total {total}")
         except Exception as e:
-            print(f"⚠️ {name} failed: {e}")
+            log(f"⚠️ {name} failed: {e}")
 
 # ======== Main Entry ==========
 def main():
-    print(f"🕒 Started: {get_my_time_str()}")
+    # Start log file fresh
+    with open("output.log", "w", encoding="utf-8") as f:
+        f.write("📊 Discord Monitoring Log\n")
+        f.write("===========================\n")
+
+    log(f"🕒 Started: {get_my_time_str()}")
     collect_discord()
-    print(f"\n✅ Finished: {get_my_time_str()}")
+    log(f"\n✅ Finished: {get_my_time_str()}")
 
 if __name__ == "__main__":
     main()
