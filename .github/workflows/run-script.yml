@@ -1,6 +1,4 @@
-# .github/workflows/run-terminal.yml
-
-name: Log Community Stats Every 10 Minutes
+name: Community Monitor (10-min interval)
 
 on:
   workflow_dispatch:
@@ -8,7 +6,7 @@ on:
     - cron: '*/10 * * * *'   # Every 10 minutes
 
 jobs:
-  run-script:
+  monitor:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +22,7 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run terminal-only script
+      - name: Run monitor script
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
