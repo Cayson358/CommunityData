@@ -45,8 +45,8 @@ def collect_discord():
 
 # ======== Main Entry ==========
 def main():
-    with open("output.log", "w", encoding="utf-8") as f:
-        f.write("📊 Discord Monitoring Log\n")
+    with open("output.log", "a", encoding="utf-8") as f:
+        f.write("\n\n📊 New Run — " + get_my_time_str() + "\n")
         f.write("===========================\n")
 
     log(f"🕒 Started: {get_my_time_str()}")
