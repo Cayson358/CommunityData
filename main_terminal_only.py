@@ -1,6 +1,7 @@
 import os
 import requests
 import random
+import time
 from datetime import datetime
 import pytz
 
@@ -40,10 +41,10 @@ def collect_discord():
             log(f"{get_my_time_str()} | Discord | {name}: Online {online} / Total {total}")
         except Exception as e:
             log(f"⚠️ {name} failed: {e}")
+        time.sleep(random.uniform(1.0, 2.0))  # light delay
 
 # ======== Main Entry ==========
 def main():
-    # Start log file fresh
     with open("output.log", "w", encoding="utf-8") as f:
         f.write("📊 Discord Monitoring Log\n")
         f.write("===========================\n")
