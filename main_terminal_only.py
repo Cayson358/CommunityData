@@ -34,8 +34,6 @@ def collect_discord():
             print(f"{get_my_time_str()} | Discord | {name}: Online {online} / Total {total}")
         except Exception as e:
             print(f"⚠️ {name} failed: {e}")
-        # Slight delay to avoid rate limits
-        time.sleep(random.uniform(1.0, 2.0))
 
 # ======== Main Entry ==========
 def main():
