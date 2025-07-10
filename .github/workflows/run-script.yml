@@ -1,0 +1,26 @@
+name: Run Main Script
+
+on:
+  workflow_dispatch:        # manual trigger from phone
+  schedule:
+    - cron: '0 * * * *'     # every hour
+
+jobs:
+  run-main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true  # skip if no requirements.txt
+
+      - name: Run main.py
+        run: python main.py
