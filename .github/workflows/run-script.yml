@@ -1,9 +1,9 @@
 name: Community Monitor (10-min interval)
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: '*/10 * * * *'   # Every 10 minutes
+  workflow_dispatch:
 
 jobs:
   monitor:
@@ -23,7 +23,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run monitor script
-        env:
-          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
-          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
-        run: python main_terminal_only.py
+        run: python main.py
+
+      - name: Upload output log
+        uses: actions/upload-artifact@v3
+        with:
+          name: discord-log
+          path: output.log
