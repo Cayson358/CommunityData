@@ -1,0 +1,24 @@
+name: Manual Discord Monitor (24x Hourly)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1500  # 24 hours + buffer
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.1'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Discord monitor 24 times (hourly)
+        run: python main_24hours.py
