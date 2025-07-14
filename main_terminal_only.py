@@ -22,7 +22,7 @@ def get_my_time_str():
 
 # ======== Discord Scraper ==========
 def collect_discord():
-    print(f"\n📡 Discord Data — {get_my_time_str()}")
+    print(f"\n Discord Data — {get_my_time_str()}")
     for name, code in discord_invites.items():
         url = f"https://discord.com/api/v9/invites/{code}?with_counts=true"
         try:
@@ -31,20 +31,20 @@ def collect_discord():
             data = res.json()
             total = data.get("approximate_member_count", 'N/A')
             online = data.get("approximate_presence_count", 'N/A')
-            print(f"✅ {name}: Online {online} / Total {total}")
+            print(f"{name}: Online {online} / Total {total}")
         except Exception as e:
-            print(f"⚠️ {name} failed: {e}")
+            print(f"{name} failed: {e}")
         time.sleep(random.uniform(1.0, 2.0))
 
 # ======== Main Loop ==========
 def main():
     for i in range(6):  # Repeat 6 times
-        print(f"\n=== ⏱️ Cycle {i+1}/6 started ===")
+        print(f"\n=== Cycle {i+1}/6 started ===")
         collect_discord()
         if i < 5:
-            print("⏳ Waiting 1 hour until next cycle...\n")
+            print("Waiting 1 hour until next cycle...\n")
             time.sleep(3600)  # 1 hour
-    print(f"\n✅ All 6 cycles completed at {get_my_time_str()}")
+    print(f"\n All 6 cycles completed at {get_my_time_str()}")
 
 if __name__ == "__main__":
     main()
