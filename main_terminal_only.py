@@ -22,7 +22,7 @@ def get_my_time_str():
 
 # ======== Discord Scraper ==========
 def collect_discord():
-    print(f"\n Discord Data — {get_my_time_str()}")
+    print(f"\nDiscord Data — {get_my_time_str()}")
     for name, code in discord_invites.items():
         url = f"https://discord.com/api/v9/invites/{code}?with_counts=true"
         try:
